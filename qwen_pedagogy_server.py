@@ -36,16 +36,16 @@ def search_viper_vault(prompt):
         words = [w.lower() for w in re.findall(r'\b\w+\b', prompt) if len(w) > 3 and w.lower() not in ['this', 'that', 'with', 'from', 'what', 'how', 'when', 'write', 'script', 'code', 'make', 'generate']]
         if not words:
             return None
-            
+
         search_query = " AND ".join(words)
-        
+
         conn = sqlite3.connect(VAULT_DB_PATH)
         c = conn.cursor()
         # Only search for actual code snippets, exclude full files which overwhelm the UI
         c.execute("SELECT code, language FROM code_vault WHERE code_vault MATCH ? AND context NOT LIKE 'Entire file:%' ORDER BY rank LIMIT 1", (search_query,))
         result = c.fetchone()
         conn.close()
-        
+
         if result:
             return f"```{result[1]}\n{result[0]}\n```"
         return None
@@ -59,11 +59,11 @@ def stackoverflow_pull_bot(prompt):
         words = [w for w in re.findall(r'\b\w+\b', prompt) if w.lower() not in ['a', 'the', 'how', 'to', 'do', 'i', 'write', 'script', 'code']]
         if not words: return None
         query = urllib.parse.quote(" ".join(words))
-        
+
         # Search for accepted answers with code blocks
         url = f"https://api.stackexchange.com/2.3/search/advanced?order=desc&sort=relevance&q={query}&site=stackoverflow&accepted=True"
         res = requests.get(url, timeout=10).json()
-        
+
         if 'items' in res and len(res['items']) > 0:
             answer_id = res['items'][0].get('accepted_answer_id')
             if answer_id:
@@ -96,7 +96,7 @@ def brew():
     prompt = data.get('prompt', '')
     if not prompt:
         return jsonify({"error": "No prompt provided"}), 400
-        
+
     vault_code = search_viper_vault(prompt)
     if vault_code:
         execution_results = process_message(vault_code)
@@ -104,7 +104,7 @@ def brew():
             "success": True, "source": "viper_db", "prompt": prompt,
             "llm_response": vault_code, "execution_summary": execution_results
         })
-        
+
     system_instruction = "You are Qwen, a termux pedagogy assistant. You output bash, python, or js code blocks to accomplish tasks. Format code strictly with ```language\\ncode\\n```."
     full_prompt = f"{system_instruction}\n\nUser: {prompt}"
     encoded_prompt = urllib.parse.quote(full_prompt)
@@ -146,12 +146,12 @@ def chat_completions():
     """Spoof the chat completions endpoint to catch frontend requests."""
     if request.method == 'OPTIONS':
         return make_response('', 204)
-        
+
     data = request.json or {}
     messages = data.get('messages', [])
     stream = data.get('stream', False)
     model_name = data.get('model', 'kai-9000')
-    
+
     # Extract the last user message
     prompt = ""
     for msg in reversed(messages):
@@ -163,7 +163,7 @@ def chat_completions():
             else:
                 prompt = str(raw_content)
             break
-            
+
     if not prompt:
         return jsonify({"error": "No prompt found in messages"}), 400
 
@@ -209,7 +209,7 @@ def chat_completions():
                 "choices": [{"index": 0, "delta": {"role": "assistant"}}]
             }
             yield f"data: {json.dumps(initial_chunk)}\n\n"
-            
+
             # Keep connection alive with a thinking indicator
             think_chunk = {
                 "id": chat_id,
@@ -219,7 +219,7 @@ def chat_completions():
                 "choices": [{"index": 0, "delta": {"content": "✦ _Brewing logic..._\n\n"}}]
             }
             yield f"data: {json.dumps(think_chunk)}\n\n"
-            
+
             # --- START PROCESSING LOGIC ---
             # 1. Try VIPER Code Vault First
             vault_code = search_viper_vault(prompt)
@@ -231,7 +231,7 @@ def chat_completions():
                 # 2. Fallback to LLM Generator
                 print(f"    -> [NO DB MATCH] Falling back to LLM (G4F)...")
                 system_instruction = "You are Qwen, a termux pedagogy assistant. You output bash, python, or js code blocks to accomplish tasks. Format code strictly with ```language\\ncode\\n```."
-                
+
                 try:
                     import g4f
                     llm_text = g4f.ChatCompletion.create(
@@ -243,7 +243,7 @@ def chat_completions():
                     )
                     if not isinstance(llm_text, str):
                         llm_text = str(llm_text)
-                        
+
                     execution_results = process_message(llm_text)
                     final_text = format_final_text("LLM FALLBACK (G4F)", llm_text, execution_results)
                 except Exception as e:
@@ -262,7 +262,7 @@ def chat_completions():
                     except Exception as e2:
                         final_text = f"Error fetching LLM fallback: {str(e)} | {str(e2)}"
             # --- END PROCESSING LOGIC ---
-            
+
             # Stream the content in smaller chunks
             chunk_size = 32
             for i in range(0, len(final_text), chunk_size):
@@ -276,7 +276,7 @@ def chat_completions():
                 }
                 yield f"data: {json.dumps(content_chunk)}\n\n"
                 time.sleep(0.01) # Small delay to mimic typing
-            
+
             # Send the final chunk with finish_reason=stop
             final_chunk = {
                 "id": chat_id,
