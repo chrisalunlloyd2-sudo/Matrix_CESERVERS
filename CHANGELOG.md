@@ -1,0 +1,19 @@
+﻿# Changelog
+
+All notable changes to this project.
+
+## 2026-07
+- **[Docs]** docs(Matrix_CESERVERS): autonomous update ΓÇö 1 file(s) ($hash)
+
+## 2026-06
+- **[Changed]** [Moe autonomous] Matrix_CESERVERS 2026-06-30 13:36 ($hash)
+- **[Docs]** docs(Matrix_CESERVERS): autonomous update ΓÇö 1 file(s) ($hash)
+- **[Changed]** [Moe autonomous] Matrix_CESERVERS 2026-06-29 00:40 ($hash)
+- **[Docs]** docs(Matrix_CESERVERS): autonomous update ΓÇö 1 file(s) ($hash)
+- **[Changed]** [Moe autonomous] Matrix_CESERVERS 2026-06-26 14:56 ($hash)
+- **[Changed]** [Moe autonomous] Matrix_CESERVERS 2026-06-20 07:58 ($hash)
+- **[Changed]** [Moe autonomous] Matrix_CESERVERS 2026-06-20 07:20 ($hash)
+- **[Changed]** [Moe autonomous] Matrix_CESERVERS 2026-06-19 22:33 ($hash)
+- **[Added]** feat: Add Calculator and Calendar core logic to servers ($hash)
+- **[Added]** feat: Initial ecosystem reorganization ($hash)
+

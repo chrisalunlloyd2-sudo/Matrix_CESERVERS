@@ -1,136 +1,51 @@
-# Matrix_CESERVERS
+﻿# Matrix_CESERVERS
 
-> KAI_9000 Hive Daemon Central background process that manages automation loops: 1. Autonomous Task Loop (Polls server) 2. Gmail Me-to-Me Harvester (15 min interval) 3. Heartbeat Monitor (60s interval)
+> Project | Branch: `master` | Commit: `6225a83`
 
-*Auto-generated 2026-07-23 22:48 from source — branch `master`, 6 Python modules, 6 other files.*
+## Overview
 
-## Architecture
+Matrix_CESERVERS is a Viper Project component.
+
+## Quick Start
 
 ```
-  README.md
-  anti_hang_watchdog.py
-  hive_daemon.py
-  kqml_router.py
-  matrix_calculator.py
-  matrix_calendar.py
-  qwen_pedagogy_server.py
-  refresh_tokens.sh
-  config/
-    settings.json
-    test_patterns.txt
-  secure/
-    oauth_config.json
-    refresh_tokens.sh
+python -m venv .venv
+.venv\Scripts\activate
+pip install -r requirements.txt
+python main.py
 ```
 
-## Dependencies
+## Project Structure
 
-External packages imported by this project:
-
-`chat_handler`, `flask`, `g4f`, `requests`
-
-## How to run
-
-Executable entry points (have a `__main__` block):
-
-- `python anti_hang_watchdog.py`
-- `python hive_daemon.py`
-- `python kqml_router.py`
-- `python matrix_calculator.py`
-- `python matrix_calendar.py`
-- `python qwen_pedagogy_server.py`
-
-## Modules
-
-### `anti_hang_watchdog.py`
-
-- `trigger_failover()`
-- `execute_with_watchdog(func)` — Executes a function and returns a failover result if it hangs.
-
-### `hive_daemon.py`
-
-KAI_9000 Hive Daemon
-Central background process that manages automation loops:
-1. Autonomous Task Loop (Polls server)
-2. Gmail Me-to-Me Harvester (15 min interval)
-3. Heartbeat Monitor (60s interval)
-
-- `log_tic(message)`
-- `run_autonomous_loop()`
-- `run_gmail_harvester()`
-- `run_heartbeat()`
-
-### `kqml_router.py`
-
-KAI_9000 KQML Router (The Postmaster)
-Wraps and unwraps agent communication in formal KQML packets.
-
-- **class `KQMLPacket`**
-  - methods: `to_string`, `to_dict`
-- `wrap_message(performative, sender, receiver, content)`
-- `unwrap_message(kqml_str)` — Simple parser for KQML strings.
-
-### `matrix_calculator.py`
-
-- **class `MatrixCalculator`** — KAI 9000: Agent-Ready Scientific Calculator
-  - methods: `calculate`
-
-### `matrix_calendar.py`
-
-- **class `MatrixCalendar`** — KAI 9000: Agentic Event & Task Calendar
-  - methods: `_init_db`, `add_event`, `list_today`
-
-### `qwen_pedagogy_server.py`
-
-- `after_request(response)`
-- `format_final_text(prefix, code, execution_results)`
-- `search_viper_vault(prompt)`
-- `stackoverflow_pull_bot(prompt)` — Acts as a Google Pull Bot, grabbing the highest voted code snippet from StackOverflow.
-- `status()`
-- `brew()`
-- `execute()`
-- `models()` — Spoof the model list so clients don't crash when listing.
-- `chat_completions()` — Spoof the chat completions endpoint to catch frontend requests.
-
-## Public API index
-
-| Module | Function | Signature |
-|--------|----------|-----------|
-| `anti_hang_watchdog` | `execute_with_watchdog` | `execute_with_watchdog(func)` |
-| `anti_hang_watchdog` | `trigger_failover` | `trigger_failover()` |
-| `hive_daemon` | `log_tic` | `log_tic(message)` |
-| `hive_daemon` | `run_autonomous_loop` | `run_autonomous_loop()` |
-| `hive_daemon` | `run_gmail_harvester` | `run_gmail_harvester()` |
-| `hive_daemon` | `run_heartbeat` | `run_heartbeat()` |
-| `kqml_router` | `unwrap_message` | `unwrap_message(kqml_str)` |
-| `kqml_router` | `wrap_message` | `wrap_message(performative, sender, receiver, content)` |
-| `qwen_pedagogy_server` | `after_request` | `after_request(response)` |
-| `qwen_pedagogy_server` | `brew` | `brew()` |
-| `qwen_pedagogy_server` | `chat_completions` | `chat_completions()` |
-| `qwen_pedagogy_server` | `execute` | `execute()` |
-| `qwen_pedagogy_server` | `format_final_text` | `format_final_text(prefix, code, execution_results)` |
-| `qwen_pedagogy_server` | `models` | `models()` |
-| `qwen_pedagogy_server` | `search_viper_vault` | `search_viper_vault(prompt)` |
-| `qwen_pedagogy_server` | `stackoverflow_pull_bot` | `stackoverflow_pull_bot(prompt)` |
-| `qwen_pedagogy_server` | `status` | `status()` |
-
-## Status
-
-- Branch: `master`
-- Last commit: 2026-06-30 13:36:23 -0600
-- File types: .sh ×2, .json ×2, .md ×1, .txt ×1
-
-### Recent commits
 ```
-7a5a23b [Moe autonomous] Matrix_CESERVERS 2026-06-30 13:36
-7bb49e9 docs(Matrix_CESERVERS): autonomous update â€” 1 file(s)
-6da95d9 [Moe autonomous] Matrix_CESERVERS 2026-06-29 00:40
-f27b277 docs(Matrix_CESERVERS): autonomous update â€” 1 file(s)
-d677ffd [Moe autonomous] Matrix_CESERVERS 2026-06-26 14:56
-d265692 [Moe autonomous] Matrix_CESERVERS 2026-06-20 07:58
-a30cd3e [Moe autonomous] Matrix_CESERVERS 2026-06-20 07:20
-1f16609 [Moe autonomous] Matrix_CESERVERS 2026-06-19 22:33
+anti_hang_watchdog.py
+hive_daemon.py
+kqml_router.py
+matrix_calculator.py
+matrix_calendar.py
+qwen_pedagogy_server.py
+README.md
+refresh_tokens.sh
+config\settings.json
+config\test_patterns.txt
+secure\oauth_config.json
+secure\refresh_tokens.sh
+
 ```
+
+## Recent Changes
+
+- docs(Matrix_CESERVERS): autonomous update ΓÇö 1 file(s) (2026-07-23)
+- [Moe autonomous] Matrix_CESERVERS 2026-06-30 13:36 (2026-06-30)
+- docs(Matrix_CESERVERS): autonomous update ΓÇö 1 file(s) (2026-06-29)
+- [Moe autonomous] Matrix_CESERVERS 2026-06-29 00:40 (2026-06-29)
+- docs(Matrix_CESERVERS): autonomous update ΓÇö 1 file(s) (2026-06-27)
+
+## Documentation
+
+- [CHANGELOG](CHANGELOG.md)
+- [ROADMAP](ROADMAP.md)
+- [TASKS](TASKS.md)
 
 ---
-*README generated by `readme_generator.py` (Viper). Deterministic — derived from source, not LLM prose.*
+*Auto-generated by Viper auto-docs @ 2026-08-03 12:03*
