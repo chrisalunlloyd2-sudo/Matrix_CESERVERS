@@ -53,13 +53,13 @@ def unwrap_message(kqml_str):
     performative_match = re.search(r'^\(([\w-]+)', kqml_str)
     if performative_match:
         data['performative'] = performative_match.group(1)
-    
+
     fields = ['sender', 'receiver', 'content', 'language', 'ontology', 'timestamp']
     for field in fields:
         match = re.search(f':{field}\\s+"?(.*?)"?\\s*$', kqml_str, re.MULTILINE)
         if match:
             data[field] = match.group(1)
-            
+
     return data
 
 if __name__ == "__main__":
